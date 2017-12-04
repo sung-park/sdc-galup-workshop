@@ -1,4 +1,6 @@
 # Setup date
+* adb devices
+* adb wait-for-device
 * adb shell
 * date -s 20171010.165000
 * adb shell setprop persist.sys.usb.config adb
