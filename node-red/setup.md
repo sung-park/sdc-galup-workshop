@@ -1,4 +1,4 @@
-# Check adb environment (notebook <--usb--> adb)
+# Check adb environment (notebook <--usb--> device)
 * adb devices
 * adb wait-for-device
 * adb shell
