@@ -1,6 +1,7 @@
 # Setup date
 * adb shell
 * date -s 20171010.165000
+* adb shell setprop persist.sys.usb.config adb
 
 # Run docker image
 * docker run --privileged --net=host -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup -v /dev:/dev -v /system:/system -v /vendor:/vendor -v /sys:/sys -v /data:/data -v /vendor/lib:/vendor/lib -it sungpark/sdc-galup-workshop:0.4 /solution/run.sh
