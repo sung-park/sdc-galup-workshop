@@ -20,3 +20,7 @@
 
 # Open Node-RED webpage
 * Open browser with address http://xx.xx.xx.xx:1880/
+
+# How to run node-red using bash
+* docker rm -f $(docker ps -a -q)
+* docker run --privileged --net=host -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup -v /dev:/dev -v /system:/system -v /vendor:/vendor -v /sys:/sys -v /data:/data -v /vendor/lib:/vendor/lib -it sungpark/sdc-galup-workshop:0.7
