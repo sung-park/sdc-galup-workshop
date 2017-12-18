@@ -67,18 +67,29 @@ msg.payload = '-T 1 -a ' + msg.payload.path;
 return msg;
 ```
 
+### 사진 출력하기
+
+1. exec를 좌측 노드 팔레드에서 드래그하여 Flow 편집창으로 옮깁니다.
+1. 노드를 더블클릭하여 Edit 화면으로 들어간 뒤 command 항목에 fbi를 입력합니다.
+
+### 30초마다 동작하기
+
+1. inject를 좌측 노드 팔레드에서 드래그하여 Flow 편집창으로 옮깁니다.
+1. 노드를 더블클릭하여 Edit 화면으로 들어간 뒤 repeat 항목을 interval 30초로 변경합니다.
+
+### 사진 목록 가져오기
+
+1. fs dir ops를 좌측 노드 팔레드에서 드래그하여 Flow 편집창으로 옮깁니다.
+1. 노드를 더블클릭하여 Edit 화면으로 들어간 뒤 path 항목에 /data/photo를 입력합니다.
+
 ### 임의사진 고르기
-/data/photo 디렉토리에서 임의 사진 하나를 선택하는 javascript 코드는 아래와 같습니다.
+
+1. Function을 좌측 노드 팔레드에서 드래그하여 Flow 편집창으로 옮깁니다.
+1. 노드를 더블클릭하고 아래 코드를 붙여넣습니다.
+
 ```
 var values = msg.files;
 valueToUse = values[Math.floor(Math.random() * values.length)];
-console.log(valueToUse);
 msg.payload = {path: '/data/photo/' + valueToUse};
 return msg;
 ```
-
-##
-```
-[{"id":"ec650388.3ad018","type":"telegram receiver","z":"87bd13b9.d6a7b","name":"EverlandBot","bot":"7206db31.f08154","saveDataDir":"/data/photo","x":117.5,"y":66,"wires":[["a2c75b88.e84ad8"],[]]},{"id":"a2c75b88.e84ad8","type":"function","z":"87bd13b9.d6a7b","name":"사진첨부가 있나요?","func":"if (msg.payload.path) {\n    return msg;\n} else {\n    return null;\n}","outputs":1,"noerr":0,"x":326.5,"y":109,"wires":[["75b1bcfc.44eb1c"]]},{"id":"75b1bcfc.44eb1c","type":"template","z":"87bd13b9.d6a7b","name":"HTML 만들기","field":"payload","fieldType":"msg","format":"handlebars","syntax":"mustache","template":"<!DOCTYPE HTML>\n<html>\n<head>\n<style type=\"text/css\">\nbody {\n  width: 100%;\n  height: 100%;\n  margin: 0px;\n  padding: 0px;\n}\ndiv {\n  -webkit-transform: rotate(90deg);\n}\n</style>\n</head>\n<body bgcolor=\"#000000\">\n  <div>\n    <center>\n      <img src=\"{{{payload.path}}}\" alt=\"starting\" style=\"width: 100%;\" />\n    </center>\n  </div>\n</body>\n</html>","output":"str","x":609.5,"y":159,"wires":[["2d89dbf6.ff8714","1ebeb8f9.750837","9df6a55b.9ec57"]]},{"id":"2d89dbf6.ff8714","type":"file","z":"87bd13b9.d6a7b","name":"","filename":"/data/photo.html","appendNewline":true,"createDir":true,"overwriteFile":"true","x":829.5,"y":185,"wires":[]},{"id":"c0e67aca.f3c3e8","type":"exec","z":"87bd13b9.d6a7b","command":"/root/webloader","addpay":true,"append":"","useSpawn":"false","timer":"","oldrc":false,"name":"","x":1193.5,"y":309.5,"wires":[[],[],[]]},{"id":"ce9c796.6cf3e08","type":"function","z":"87bd13b9.d6a7b","name":"/data/photo.html","func":"msg.payload = '/data/photo.html';\nreturn msg;","outputs":1,"noerr":0,"x":995.5,"y":263,"wires":[["c0e67aca.f3c3e8"]]},{"id":"1ebeb8f9.750837","type":"delay","z":"87bd13b9.d6a7b","name":"","pauseType":"delay","timeout":"1","timeoutUnits":"seconds","rate":"1","nbRateUnits":"1","rateUnits":"second","randomFirst":"1","randomLast":"5","randomUnits":"seconds","drop":false,"x":811.5,"y":217,"wires":[["ce9c796.6cf3e08"]]},{"id":"9df6a55b.9ec57","type":"debug","z":"87bd13b9.d6a7b","name":"","active":true,"console":"false","complete":"true","x":798.5,"y":106,"wires":[]},{"id":"aa3a2425.6df3c8","type":"inject","z":"87bd13b9.d6a7b","name":"30초마다","topic":"","payload":"","payloadType":"date","repeat":"","crontab":"","once":false,"x":121,"y":362,"wires":[["4d4305df.32d7d4"]]},{"id":"4d4305df.32d7d4","type":"fs-ops-dir","z":"87bd13b9.d6a7b","name":"사진 목록 가져오기","path":"/data/photo","pathType":"str","filter":"*","filterType":"str","dir":"files","dirType":"msg","x":285,"y":304,"wires":[["a51368fe.282888"]]},{"id":"a51368fe.282888","type":"function","z":"87bd13b9.d6a7b","name":"임의 사진 고르기","func":"var values = msg.files;\nvalueToUse = values[Math.floor(Math.random() * values.length)];\nconsole.log(valueToUse);\n//msg.payload.path = '/data/photo/' + valueToUse;\nmsg.payload = {path: '/data/photo/' + valueToUse};\nreturn msg;","outputs":1,"noerr":0,"x":471,"y":249,"wires":[["75b1bcfc.44eb1c"]]},{"id":"7206db31.f08154","type":"telegram bot","z":"","botname":"EverlandBot","usernames":"","chatids":""}]
-```
-
