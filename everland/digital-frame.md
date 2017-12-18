@@ -32,7 +32,18 @@ Telegram Bot 생성 후 HTTP API 사용을 위한 Token 값 메모가 필요합�
 
 ## Flow 작성하기
 
-### 사진첨부 확인
+### 텔레그램 메세지 받기 노드 작성하기
+
+1. Telegram Receiver를 좌측 노드 팔레트에서 드래그해서 Flow 편집창으로 옮깁니다.
+1. 노드를 더블클릭해서 Edit 화면으로 들어간 뒤 Bot 우측의 연필 버튼을 눌러 새로운 Bot을 추가합니다.
+1. 위의 'Telegram 봇 만들기'를 참조하여 Bot을 생성하고 받은 Token을 입력합니다.
+1. Download Directory를 /data/photo로 입력합니다.
+
+### 사진첨부 확인 노드 작성하기
+
+1. Function을 좌측 노드 팔레드에서 드래그하여 Flow 편집창으로 옮깁니다.
+1. 노드를 더블클릭하고 아래 코드를 붙여넣습니다.
+
 ```
 if (msg.payload.path) {
     return msg;
@@ -42,13 +53,14 @@ if (msg.payload.path) {
 ```
 
 ### 사진 표시를 위한 명령어 구성
-사진을 폰 화면 전체에 표시하기 위해서는 fbi라는 툴을 사용합니다. 예를 들어 everland.jpg를 화면에 표시하기 위해서는
+사진을 폰 화면 전체에 표시하기 위해서는 fbi라는 명령어를 사용합니다. 예를 들어 everland.jpg를 화면에 표시하기 위해서는
 
 ```
 fbi -T 1 -a everland.jpg
 ```
 
-fbi 뒤에 들어갈 옵션을 미리 만들어줍니다.
+1. Function을 좌측 노드 팔레드에서 드래그하여 Flow 편집창으로 옮깁니다.
+1. 노드를 더블클릭하고 아래 코드를 붙여넣습니다.
 
 ```
 msg.payload = '-T 1 -a ' + msg.payload.path;
