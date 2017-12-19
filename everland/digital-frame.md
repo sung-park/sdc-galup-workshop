@@ -87,6 +87,12 @@ adb reboot
 adb shell ip addr
 ```
 
+## 날짜 맞추기
+
+```
+date -s 20171219.154000
+```
+
 ## Node-RED 실행하기
 
 ```
