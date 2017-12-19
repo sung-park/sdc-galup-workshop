@@ -1,24 +1,6 @@
-# 타블렛을 이용한 디지털 액자 만들기 실습
+# Node-RED를 이용한 디지털 액자 만들기 실습
 
-## WIFI 설정하기
-
-```
-adb pull /data/misc/wifi/wpa_supplicant.conf
-adb push wpa_supplicant.conf /data/misc/wifi/
-adb reboot
-adb shell ip addr
-```
-
-## Node-RED 실행하기
-
-```
-docker run --privileged --net=host -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup -v /dev:/dev -v /system:/system -v /vendor:/vendor -v /sys:/sys -v /data:/data -v /vendor/lib:/vendor/lib -it sungpark/everland-node-red:0.1 /solution/run.sh
-
-adb forward tcp:1880 tcp:1880
-
-adb shell
-mkdir -p /data/photo/
-```
+(단말 설정하기는 맨 아래로 이동)
 
 ## Telegram 봇 만들기
 
@@ -93,3 +75,27 @@ valueToUse = values[Math.floor(Math.random() * values.length)];
 msg.payload = {path: '/data/photo/' + valueToUse};
 return msg;
 ```
+
+# 단말 설정하기
+
+## WIFI 설정하기
+
+```
+adb pull /data/misc/wifi/wpa_supplicant.conf
+adb push wpa_supplicant.conf /data/misc/wifi/
+adb reboot
+adb shell ip addr
+```
+
+## Node-RED 실행하기
+
+```
+docker run --privileged --net=host -e container=docker -v /sys/fs/cgroup:/sys/fs/cgroup -v /dev:/dev -v /system:/system -v /vendor:/vendor -v /sys:/sys -v /data:/data -v /vendor/lib:/vendor/lib -it sungpark/everland-node-red:0.1 /solution/run.sh
+
+adb forward tcp:1880 tcp:1880
+
+adb shell
+mkdir -p /data/photo/
+```
+
+
